@@ -1,4 +1,3 @@
-import pandas as pd
 from urllib.parse import quote
 import webbrowser
 from time import sleep
