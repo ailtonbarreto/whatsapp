@@ -3,7 +3,7 @@ import webbrowser
 from time import sleep
 import pyautogui
 import streamlit as st
-
+import pandas as pd
 
 url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTIjlaFlFd2MaY9MQhswdNF2W1FzBWAxxHqlOszSfTLnxQ27ss9VyANMIEXjNsyMQ3cJBunTVDEbjUl/pub?gid=0&single=true&output=csv'
 
