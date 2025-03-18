@@ -15,7 +15,8 @@ def enviar_mensagens(df, mensagem):
     sleep(3)
 
     for _, linha in df.iterrows():
-        nome = linha['nome'] 
+        nome = linha['nome']
+
         telefone = linha['telefone'] 
 
         try:
