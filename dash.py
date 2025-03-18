@@ -1,7 +1,7 @@
 # from urllib.parse import quote
 # import webbrowser
 from time import sleep
-# import pyautogui
+import pyautogui
 import streamlit as st
 import pandas as pd
 
