@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Envio de Mensagens Personalizadas via WhatsApp</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Envio de Mensagens Personalizadas via WhatsApp</h1>
+
+        <!-- Texto da mensagem -->
+        <label for="mensagem">Mensagem:</label>
+        <textarea id="mensagem" rows="6">Olá, {nome}! Como você está?</textarea>
+
+        <!-- Botão de envio -->
+        <button onclick="enviarMensagens()">Enviar Mensagens</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.0/papaparse.min.js"></script>
+    <script>
+        // URL do CSV com os dados
+        const urlCSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTIjlaFlFd2MaY9MQhswdNF2W1FzBWAxxHqlOszSfTLnxQ27ss9VyANMIEXjNsyMQ3cJBunTVDEbjUl/pub?gid=0&single=true&output=csv';
+
+        // Função para carregar o CSV e processar os dados
+        function carregarCSV() {
+            fetch(urlCSV)
+                .then(response => response.text())
+                .then(csvData => {
+                    // Usar o PapaParse para converter o CSV em JSON
+                    const dados = Papa.parse(csvData, { header: true }).data;
+                    console.log(dados); // Mostrar os dados no console para debug
+                })
+                .catch(error => console.error('Erro ao carregar o CSV:', error));
+        }
+
+        // Função para enviar as mensagens via WhatsApp Web
+        function enviarMensagens() {
+            let mensagem = document.getElementById('mensagem').value;
+
+            // Fazer o fetch para carregar os dados da planilha
+            fetch(urlCSV)
+                .then(response => response.text())
+                .then(csvData => {
+                    const dados = Papa.parse(csvData, { header: true }).data;
+
+                    // Loop para abrir o WhatsApp Web para cada pessoa
+                    dados.forEach((pessoa, index) => {
+                        let nome = pessoa['nome'];  // Pegar o nome
+                        let telefone = pessoa['telefone']; // Pegar o telefone
+
+                        // Substituir {nome} pela variável nome
+                        let mensagemPersonalizada = mensagem.replace("{nome}", nome);
+
+                        // Criar o link do WhatsApp
+                        let linkWhatsApp = `https://web.whatsapp.com/send?phone=${telefone}&text=${encodeURIComponent(mensagemPersonalizada)}`;
+
+                        // Abrir o WhatsApp Web
+                        window.open(linkWhatsApp, '_blank');
+                    });
+                })
+                .catch(error => console.error('Erro ao carregar o CSV para enviar mensagens:', error));
+        }
+
+        // Carregar os dados CSV assim que a página for carregada
+        window.onload = carregarCSV;
+    </script>
+</body>
+</html>
