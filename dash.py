@@ -1,5 +1,5 @@
-from urllib.parse import quote
-import webbrowser
+# from urllib.parse import quote
+# import webbrowser
 from time import sleep
 import pyautogui
 import streamlit as st
@@ -12,52 +12,54 @@ url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTIjlaFlFd2MaY9MQhswdNF2W
 df = pd.read_csv(url)
 
 
+# def enviar_mensagens(df, mensagem):
 
-def enviar_mensagens(df, mensagem):
+# def enviar_mensagens(df, mensagem):
+
     
-    sleep(3)
+#     sleep(3)
 
-    for _, linha in df.iterrows():
-        nome = linha['nome']
+#     for _, linha in df.iterrows():
+#         nome = linha['nome']
 
-        telefone = linha['telefone'] 
+#         telefone = linha['telefone'] 
 
-        try:
+#         try:
      
-            mensagem_personalizada = mensagem.replace("{nome}", nome)
+#             mensagem_personalizada = mensagem.replace("{nome}", nome)
 
   
-            link_mensagem_whatsapp = f'https://web.whatsapp.com/send?phone={telefone}&text={quote(mensagem_personalizada)}'
+#             link_mensagem_whatsapp = f'https://web.whatsapp.com/send?phone={telefone}&text={quote(mensagem_personalizada)}'
             
-            webbrowser.open(link_mensagem_whatsapp)
+#             webbrowser.open(link_mensagem_whatsapp)
             
-            sleep(10) 
+#             sleep(10) 
 
 
-            pyautogui.hotkey('enter')
-            sleep(3)
-            pyautogui.hotkey('ctrl', 'w')
-            sleep(3)
+#             pyautogui.hotkey('enter')
+#             sleep(3)
+#             pyautogui.hotkey('ctrl', 'w')
+#             sleep(3)
             
-        except Exception as e:
-            st.error(f'Erro ao enviar mensagem para {nome}: {e}')
-            continue
+#         except Exception as e:
+#             st.error(f'Erro ao enviar mensagem para {nome}: {e}')
+#             continue
 
 
-st.title('Envio de Mensagens Personalizadas via WhatsApp')
+# st.title('Envio de Mensagens Personalizadas via WhatsApp')
 
 
-st.write("Dados carregados da URL:")
-st.dataframe(df)
+# st.write("Dados carregados da URL:")
+# st.dataframe(df)
 
 
-if 'nome' in df.columns and 'telefone' in df.columns:
-    st.success("Dados carregados com sucesso.")
+# if 'nome' in df.columns and 'telefone' in df.columns:
+#     st.success("Dados carregados com sucesso.")
 
 
-    mensagem_input = st.text_area("Digite a mensagem! Utilize {nome} para incluir o nome do destinatário.")
+#     mensagem_input = st.text_area("Digite a mensagem! Utilize {nome} para incluir o nome do destinatário.")
 
-    if st.button('Enviar Mensagens'):
-        enviar_mensagens(df, mensagem_input)
-else:
-    st.error("O arquivo CSV deve conter as colunas 'nome' e 'telefone'!")
+#     if st.button('Enviar Mensagens'):
+#         enviar_mensagens(df, mensagem_input)
+# else:
+#     st.error("O arquivo CSV deve conter as colunas 'nome' e 'telefone'!")
